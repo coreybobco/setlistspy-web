@@ -16,6 +16,20 @@ const SearchTable = (props) => (
         )}
       </tbody>
     </table>
+    <table>
+      <thead>
+        <tr>
+          <th>Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        { props.data.artist_tracks && props.data.artist_tracks.map((artistTrack) =>
+          <tr key={artistTrack.track}>
+            <td>{artistTrack.track}</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
   </div>
 );
 
