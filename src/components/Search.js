@@ -1,5 +1,7 @@
 import React from 'react';
 import SearchTable from './SearchTable';
+import FontAwesome from 'react-fontawesome';
+import '../styles/search.scss'
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -30,13 +32,12 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="main">
+        <h1>SetSpy.fm</h1>
+        <img id="logo" src={require('./logo.jpg')}></img><br/>
         <input type="text" onChange={e => this.setState({ ...this.state, searchDjName: e.target.value })} />
         <button disabled={this.state.isSearching} onClick={e => this.fetchDjData(this.state.searchDjName)}>
-          { this.state.isSearching
-              ? 'Searching...'
-              : 'Search'
-          }
+          <FontAwesome name="search"/>
         </button>
         <SearchTable data={this.state.data} />
       </div>
