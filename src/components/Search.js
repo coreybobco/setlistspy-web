@@ -33,7 +33,7 @@ export default class Search extends React.Component {
   render() {
     return (
       <div id="main">
-        <h1>SetSpy.fm</h1>
+        <h1>setspy.fm</h1>
         <img id="logo" src={require('./logo.jpg')}></img><br/>
         <input type="text" onChange={e => this.setState({ ...this.state, searchDjName: e.target.value })} />
         <button disabled={this.state.isSearching} onClick={e => this.fetchDjData(this.state.searchDjName)}>
