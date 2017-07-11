@@ -32,10 +32,13 @@ export default class SearchTable extends React.Component {
 
   render() {
     return  (
-      <ReactDataGrid
-        columns={this.state.columns}
-        rowGetter={i => this.state.rows[i]}
-        rowsCount={this.state.rows.length}
-        minHeight={500} />);
+      <div id="SearchTable">
+        <ReactDataGrid
+          columns={this.state.columns}
+          rowGetter={i => this.state.rows[i]}
+          rowsCount={this.state.rows.length}
+          minHeight={500} />
+      </div>
+      );
   }
 }

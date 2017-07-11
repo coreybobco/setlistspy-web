@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~font-awesome/css/font-awesome.min.css';
 @import url('https://fonts.googleapis.com/css?family=Signika:regular,bold,italic&subset=latin,latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Quantico');
 
 // Some best-practice CSS that's useful for most apps
 // Just remove them if they're not what you want
@@ -22,10 +23,10 @@ body {
   box-sizing: inherit;
 }
 
-table {
+#SearchTable {
   margin-left: auto;
   margin-right: auto;
-}
-th {
-  text-align: center;
+  max-width: 500px;
+  font-family: Quantico;
+  font-size: 18px;
 }
