@@ -1,36 +1,41 @@
 import React from 'react';
+import ReactDataGrid from 'react-data-grid';
 
-const SearchTable = (props) => (
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>Artist - Track</th>
-        </tr>
-      </thead>
-      <tbody>
-        { props.data.dj_tracks && props.data.dj_tracks.map((djTrack) =>
-          <tr key={djTrack.artist + djTrack.title}>
-            <td>{djTrack.artist} - {djTrack.title}</td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-    <table>
-      <thead>
-        <tr>
-          <th>Track</th>
-        </tr>
-      </thead>
-      <tbody>
-        { props.data.artist_tracks && props.data.artist_tracks.map((artistTrack) =>
-          <tr key={artistTrack.track}>
-            <td>{artistTrack.track}</td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-  </div>
-);
+export default class SearchTable extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props)
+    this.state = {
+      dj_tracks: props.data.dj_tracks,
+      rows: [],
+      columns: [{ key: 'artist_track', name: 'Artist - Track' }]
+    }
+  }
 
-export default SearchTable;
+  createRows() {
+    let rows = [];
+    for (let i = 1; i < this.state.dj_tracks.length; i++) {
+      rows.push({
+        id: i,
+        artist_track:  this.state.dj_tracks[i].artist + " - " + this.state.dj_tracks[i].title
+      });
+    }
+    this.setState({
+      ...this.state,
+      rows: rows
+    });
+  }
+
+  componentDidMount(){
+    this.createRows();
+  }
+
+  render() {
+    return  (
+      <ReactDataGrid
+        columns={this.state.columns}
+        rowGetter={i => this.state.rows[i]}
+        rowsCount={this.state.rows.length}
+        minHeight={500} />);
+  }
+}

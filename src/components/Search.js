@@ -40,7 +40,7 @@ export default class Search extends React.Component {
         <button disabled={this.state.isSearching} onClick={e => this.fetchDjData(this.state.searchDjName)}>
           <FontAwesome name="search"/>
         </button>
-        <SearchTable data={this.state.data} />
+        { (this.state.data.dj_tracks) ? <SearchTable data={this.state.data} /> : <div></div> }
       </div>
     );
   }
