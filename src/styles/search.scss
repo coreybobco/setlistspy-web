@@ -17,8 +17,16 @@ h4 {
   margin-top: 8px;
 }
 input {
-  width: 300px;
-  margin: 8px 0px 16px 0px;
+  width: 250px;
+  margin: 0px 4px 16px 0px;
+  font-size: 20px;
+  height: auto;
+  vertical-align: top;
+}
+button {
+  vertical-align: top;
+  height: 36px;
+  width: 36px;
 }
 p {
   max-width: 320px;
