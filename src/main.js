@@ -19,6 +19,10 @@ let render = () => {
     <App store={store} routes={{
       path: '/',
       component: Search,
+      childRoutes: [{
+        path: '/search/:query',
+        component: Search,
+      }]
     }} />,
     MOUNT_NODE
   )
