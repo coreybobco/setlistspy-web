@@ -42,10 +42,10 @@ export default class Search extends React.Component {
         <h1>setspy.fm</h1>
         <img id="logo" src={require('./logo.jpg')}></img><br/>
         <h4>Discover music played, recorded, & remixed by your favorite DJs & artists.</h4>
-        <input value={this.state.searchDjName} type="text" value={this.state.searchDjName} onChange={e => this.setState({ ...this.state, searchDjName: e.target.value })} />
-        <button disabled={this.state.isSearching} onClick={e => this.fetchDjData(this.state.searchDjName)}>
-          <FontAwesome name="search"/>
-        </button>
+          <input type="text" onChange={e => this.setState({ ...this.state, searchDjName: e.target.value })} disabled={this.state.isSearching}/>
+          <button onClick={e => this.fetchDjData(this.state.searchDjName)} disabled={this.state.isSearching}>
+            <FontAwesome name={ this.state.isSearching ? 'spinner' : 'search' } spin={this.state.isSearching} />
+          </button>
         { (this.state.data.dj_tracks) ? <SearchTable data={this.state.data} /> : <div></div> }
       </div>
     );
