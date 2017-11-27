@@ -21,10 +21,8 @@ export default class Search extends React.Component {
 
   fetchDjData(djName) {
     this.setState({ ...this.state, isSearching: true });
-    fetch('http://setlistspy.com/setlistSearch', {
-      method: 'POST',
-      body: JSON.stringify(djName),
-      headers: { 'Content-Type': 'application/json' },
+    fetch('http://127.0.0.1:8000/api/v1/setlists/?dj__name=' + djName, {
+      method: 'GET'
     })
     .then(r => r.json())
     .then((data) => {
@@ -35,6 +33,24 @@ export default class Search extends React.Component {
       });
     });
   }
+
+
+  // fetchDjData(djName) {
+  //   this.setState({ ...this.state, isSearching: true });
+  //   fetch('http://setlistspy.com/setlistSearch', {
+  //     method: 'POST',
+  //     body: JSON.stringify(djName),
+  //     headers: { 'Content-Type': 'application/json' },
+  //   })
+  //   .then(r => r.json())
+  //   .then((data) => {
+  //     this.setState({
+  //       ...this.state,
+  //       isSearching: false,
+  //       data: data,
+  //     });
+  //   });
+  // }
 
   render() {
     return (
