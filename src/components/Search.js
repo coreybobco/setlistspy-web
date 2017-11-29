@@ -21,7 +21,7 @@ export default class Search extends React.Component {
 
   fetchDjData(djName) {
     this.setState({ ...this.state, isSearching: true });
-    fetch('http://127.0.0.1:8000/api/v1/setlists/?dj__name=' + djName, {
+    fetch('http://setspy.fm:8000/api/v1/tracks/?setlists__dj__name=' + djName, {
       method: 'GET'
     })
     .then(r => r.json())
@@ -34,7 +34,7 @@ export default class Search extends React.Component {
     });
   }
 
-
+  // For legacy/testing, this is how to use the old Flask server.
   // fetchDjData(djName) {
   //   this.setState({ ...this.state, isSearching: true });
   //   fetch('http://setlistspy.com/setlistSearch', {
@@ -53,6 +53,7 @@ export default class Search extends React.Component {
   // }
 
   render() {
+    console.log(this.state);
     return (
       <div id="main">
         <h1>setspy.fm</h1>
@@ -62,7 +63,7 @@ export default class Search extends React.Component {
           <button onClick={e => this.fetchDjData(this.state.searchDjName)} disabled={this.state.isSearching}>
             <FontAwesome name={ this.state.isSearching ? 'spinner' : 'search' } spin={this.state.isSearching} />
           </button>
-        { (this.state.data.dj_tracks) ? <SearchTable data={this.state.data} /> : <div></div> }
+        { (this.state.data.length) ? <SearchTable data={this.state.data} /> : <div></div> }
       </div>
     );
   }
