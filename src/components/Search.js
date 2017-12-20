@@ -21,7 +21,7 @@ export default class Search extends React.Component {
 
   fetchDjData(djName) {
     this.setState({ ...this.state, isSearching: true });
-    fetch('http://setspy.fm:7300/api/v1/tracks/?search=' + djName, {
+    fetch('http://setspy.fm:7300/api/v1/tracks/?setlists__dj__name=' + djName, {
       method: 'GET'
     })
     .then(r => r.json())
