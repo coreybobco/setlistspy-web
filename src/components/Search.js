@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchTable from './SearchTable';
+import SearchResults from './SearchResults';
 import FontAwesome from 'react-fontawesome';
 import '../styles/search.scss'
 
@@ -21,7 +21,7 @@ export default class Search extends React.Component {
 
   fetchDjData(djName) {
     this.setState({ ...this.state, isSearching: true });
-    fetch('http://setspy.fm:7300/api/v1/tracks/?setlists__dj__name=' + djName, {
+    fetch('http://setspy.fm:7300/api/v1/tracks/?search=' + djName, {
       method: 'GET'
     })
     .then(r => r.json())
@@ -63,7 +63,7 @@ export default class Search extends React.Component {
           <button onClick={e => this.fetchDjData(this.state.searchDjName)} disabled={this.state.isSearching}>
             <FontAwesome name={ this.state.isSearching ? 'spinner' : 'search' } spin={this.state.isSearching} />
           </button>
-        { (this.state.data.length) ? <SearchTable data={this.state.data} /> : <div></div> }
+        { (this.state.data.length) ? <SearchResults data={this.state.data} /> : <div></div> }
       </div>
     );
   }
