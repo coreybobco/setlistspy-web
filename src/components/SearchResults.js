@@ -24,10 +24,9 @@ class RowRenderer extends React.Component {
   }
 }
 
-
 export default class SearchTable extends React.Component {
   render() {
-    const rows = this.props.data.map((track, i) => ({
+    const rows = this.props.data.results.map((track, i) => ({
       id: i,
       artist_track: `${track.artist.name} - ${track.title}`,
     }));
@@ -47,11 +46,20 @@ export default class SearchTable extends React.Component {
               rowGetter={i => rows[i]}
               rowsCount={rows.length}
               rowRenderer={RowRenderer}
-              minHeight={500} />
+              minHeight={500} 
+            />
           </div>
         </TabPanel>
         <TabPanel>
-          <h4>Work in Progress</h4>
+        <div id="SearchTable">
+            <ReactDataGrid
+              columns={[{ key: 'artist_track', name: 'Artist - Track' }]}
+              rowGetter={i => rows[i]}
+              rowsCount={rows.length}
+              rowRenderer={RowRenderer}
+              minHeight={500} 
+            />
+          </div>
         </TabPanel>
       </Tabs>
     </div>

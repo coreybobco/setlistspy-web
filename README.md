@@ -1,3 +1,3 @@
-# Setspy React front-end
+# Setlist Spy React front-end
 
 Lorem ipsum.
