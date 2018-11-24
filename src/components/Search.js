@@ -8,7 +8,7 @@ export default class Search extends React.Component {
     super(props);
     this.state = {
       data: {},
-      searchDjName: props.params.query || '',
+      searchName: props.params.query || '',
       isSearching: false,
       results: false,
     }
@@ -16,26 +16,35 @@ export default class Search extends React.Component {
 
   componentWillMount() {
     if (this.props.params.query) {
-      this.fetchDjData(this.props.params.query);
+      this.fetchSearchStats(this.props.params.query);
     }
   }
 
-  fetchTracksPlayedByDJ(djName) {
-    this.setState({ ...this.state, isSearching: true });
-    fetch('http://localhost:6400/api/tracks/?setlists__dj__name=' + djName, {
-      method: 'GET'
-    })
-    .then(r => r.json())
-    .then((data) => {
+  fetchSearchStats(searchTerm) {
+    const urls = [
+      'http://localhost:6400/api/tracks/?setlists__dj__name=' + searchTerm,
+      'http://localhost:6400/api/tracks/stats/?artist__name=' + searchTerm,
+    ];
+
+    Promise.all(urls.map(url => fetch(url)))
+    .then(responses => Promise.all(
+      responses.map(r => r.json())
+    ))
+    .then(function(values){
+      let data = {}
+      data.DJTrackStats = values[0];
+      data.ArtistTrackStats = values[1];
+      return data;
+    }).then(data => {
+      console.log(data);
       this.setState({
         ...this.state,
         isSearching: false,
         data: data,
         searchComplete: true,
       });
-    });
+    })
   }
-
   
   render() {
     console.log(this.state);
@@ -44,11 +53,11 @@ export default class Search extends React.Component {
         <h1>Setlist Spy</h1>
         <img id="logo" src={require('./logo.jpg')}></img><br/>
         <h4>Discover music played, recorded, & remixed by your favorite DJs & artists.</h4>
-          <input type="text" onChange={e => this.setState({ ...this.state, searchDjName: e.target.value })} disabled={this.state.isSearching}/>
-          <button onClick={e => this.fetchTracksPlayedByDJ(this.state.searchDjName)} disabled={this.state.isSearching}>
+          <input type="text" onChange={e => this.setState({ ...this.state, searchName: e.target.value })} disabled={this.state.isSearching}/>
+          <button onClick={e => this.fetchSearchStats(this.state.searchName)} disabled={this.state.isSearching}>
             <FontAwesome name={ this.state.isSearching ? 'spinner' : 'search' } spin={this.state.isSearching} />
           </button>
-        { (this.state.searchComplete ) ? <SearchResults data={this.state.data} /> : <div></div> }
+        { (this.state.searchComplete ) ? <SearchResults searchName={this.state.searchName} data={this.state.data} /> : <div></div> }
       </div>
     );
   }
