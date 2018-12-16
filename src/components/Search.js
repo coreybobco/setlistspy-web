@@ -22,8 +22,8 @@ export default class Search extends React.Component {
 
   fetchSearchStats(searchTerm) {
     const urls = [
-      'http://localhost:6400/api/tracks/?setlists__dj__name=' + searchTerm,
-      'http://localhost:6400/api/tracks/stats/?artist__name=' + searchTerm,
+      process.env.API_URL + 'tracks/?setlists__dj__name=' + searchTerm,
+      process.env.API_URL + 'tracks/stats/?artist__name=' + searchTerm,
     ];
 
     Promise.all(urls.map(url => fetch(url)))
