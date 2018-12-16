@@ -10,3 +10,4 @@ services:
     command: ['/usr/src/app/start-production.sh']
     environment:
       API_URL: http://api.setlistspy.com:8000/api/
+      PORT: '80'
