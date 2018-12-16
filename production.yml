@@ -5,8 +5,6 @@ services:
     ports:
       - "8080:8080"
     restart: on-failure
-    volumes:
-      - ./:/usr/src/app/
     command: ['/usr/src/app/start-production.sh']
     environment:
       API_URL: http://api.setlistspy.com:8000/api/
