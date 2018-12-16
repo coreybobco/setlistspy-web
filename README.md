@@ -1,3 +1,3 @@
-# Setlist Spy React front-end
+# Setlist Spy (React Web App)
 
 Lorem ipsum.
