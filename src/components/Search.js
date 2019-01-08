@@ -11,13 +11,27 @@ export default class Search extends React.Component {
       searchName: props.params.query || '',
       isSearching: false,
       results: false,
+      frameIndex: 0
     }
+
+    let animationPath = [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1];
+
+    setInterval(() => {
+       this.setState(previousState => {
+         return {
+            frameIndex: (this.state.frameIndex + 1) % animationPath.length,
+            eyeOpen: animationPath[this.state.frameIndex] == 0,
+        };
+      });
+    }, 299);
   }
 
   componentWillMount() {
     if (this.props.params.query) {
       this.fetchSearchStats(this.props.params.query);
     }
+    this.state.frameIndex += 1;
+    console.log(this.state.frameIndex);
   }
 
   fetchSearchStats(searchTerm) {
@@ -47,11 +61,12 @@ export default class Search extends React.Component {
   }
   
   render() {
-    console.log(this.state);
+    let sprite = this.state.eyeOpen
+      ? require('./logo1.png')
+      : require('./logo2.png');
     return (
       <div id="main">
-        <h1>Setlist Spy</h1>
-        <img id="logo" src={require('./logo.jpg')}></img><br/>
+        <img src={sprite}/>
         <h4>Discover music played, recorded, & remixed by your favorite DJs & artists.</h4>
           <input type="text" onChange={e => this.setState({ ...this.state, searchName: e.target.value })} disabled={this.state.isSearching}/>
           <button onClick={e => this.fetchSearchStats(this.state.searchName)} disabled={this.state.isSearching}>
