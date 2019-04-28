@@ -47,12 +47,12 @@ export default class Search extends React.Component {
     .then(function(values){
       let data = {}
       data.DJTrackStats = values[0];
-      data.DJTrackCount = values[0]['count'];
+      data.DJTrackTotalCount = values[0]['count'];
       data.ArtistTrackStats = values[1];
+      data.ArtistTrackTotalCount = values[1]['count'];
       data.searchTerm = searchTerm;
       return data;
     }).then(data => {
-      console.log(data);
       this.setState({
         ...this.state,
         isSearching: false,

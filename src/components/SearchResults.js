@@ -34,13 +34,16 @@ export default class SearchTable extends React.Component {
       super(props);
       this.canvas = null;
       this.state = {
-        data: {},
+        data: {
+          'DJTrackStats': {'count':0, results:[]},
+          'ArtistTrackStats': {'count':0, results:[]}
+        },
         lastOffset: 0,
         results: false,
       }
       this.scrollListener = () => {
         if ((this.canvas.scrollHeight - (this.canvas.scrollTop + this.canvas.clientHeight)) < 500) {
-          // this.state.isSearching = true;
+          this.fetchMoreDJResults = this.fetchMoreDJResults.bind(this);
           this.fetchMoreDJResults();
         }
       };
@@ -67,12 +70,12 @@ export default class SearchTable extends React.Component {
       return;
     }
     this.setState({
-      ...this.state,
       lastOffset: offset,
     });
     const urls = [
       process.env.API_URL + 'tracks/?setlists__dj__name=' + this.props.data.searchTerm + '&offset=' + offset,
     ];
+    console.log(offset);
 
     var next_page_data = null;
     Promise.all(urls.map(url => fetch(url)))
@@ -85,10 +88,8 @@ export default class SearchTable extends React.Component {
       data.DJTrackCount = values[0]['count'];
       return data;
     }).then(data => {
-      console.log(data);
       this.setState({
         ...this.state,
-        lastOffset: offset,
         data: data,
       });
       this.props.data.DJTrackStats.results = this.props.data.DJTrackStats.results.concat(this.state.data.DJTrackStats.results);
@@ -96,15 +97,24 @@ export default class SearchTable extends React.Component {
   }
   
   render() {
-    this.props.data.DJTrackStatsRows = this.props.data.DJTrackStats.results.map((track, i) => ({
-      id: i,
-      artist_track: `${track.artist.name} - ${track.title}`,
-    }));
-    this.props.data.ArtistTrackStatsRows = this.props.data.ArtistTrackStats.map((track, i) => ({
-      id: i,
-      artist_track: `${track.artist.name} - ${track.title}`,
-    }));
-
+    // if (this.props.data.DJTrackStats) {
+      if (this.props.data.DJTrackStats.results.length > 0) {
+        this.props.data.DJTrackStatsRows = this.props.data.DJTrackStats.results.map((track, i) => ({
+          id: i,
+          artist_track: `${track.artist.name} - ${track.title}`,
+        }));
+      }
+    // }
+    // this.props.data.DJTrackCount = this.props.data.DJTrackStats.results.length ? this.props.data.DJTrackStats : 0;
+    
+    // if (this.props.data.DJTrackStats) {
+      if (this.props.data.ArtistTrackStats.results.length > 0) {
+        this.props.data.ArtistTrackStatsRows = this.props.data.ArtistTrackStats.results.map((track, i) => ({
+          id: i,
+          artist_track: `${track.artist.name} - ${track.title}`,
+        }));
+      }
+    // }
     return  (
     <div id="SearchResults">
       <Tabs>
@@ -118,18 +128,18 @@ export default class SearchTable extends React.Component {
             <ReactDataGrid
               columns={[{ key: 'artist_track', name: 'Artist - Track' }]}
               rowGetter={(i) => this.props.data.DJTrackStatsRows[i]}
-              rowsCount={this.props.data.DJTrackStatsRows.length}
+              rowsCount={this.props.data.DJTrackStats.results ? this.props.data.DJTrackStats.results.length : 0}
               rowRenderer={RowRenderer}
               minHeight={500} 
             />
           </div>
         </TabPanel>
         <TabPanel>
-              <div id="SearchTable">
+          <div id="SearchTable">
             <ReactDataGrid
               columns={[{ key: 'artist_track', name: 'Artist - Track' }]}
               rowGetter={i => this.props.data.ArtistTrackStatsRows[i]}
-              rowsCount={this.props.data.ArtistTrackStatsRows.length}
+              rowsCount={this.props.data.ArtistTrackStatsRows ? this.props.data.ArtistTrackStatsRows.length : 0}
               rowRenderer={RowRenderer}
               minHeight={500} 
             />
