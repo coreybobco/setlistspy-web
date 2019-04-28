@@ -18,3 +18,8 @@ docker-compose -f local-with-production-backend.yml up
 docker-compose -f local.yml build
 docker-compose -f local.yml up
 ```
+- Using production settings (no live reload)
+```
+docker-compose -f production.yml build
+docker-compose -f production.yml up
+```
