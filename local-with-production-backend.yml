@@ -7,6 +7,6 @@ services:
     restart: on-failure
     volumes:
       - ./:/usr/src/app/
-    command: ['yarn', 'start']
+    entrypoint: ['/usr/src/app/start-local.sh']
     environment:
       API_URL: http://api.setlistspy.com:8000/api/
