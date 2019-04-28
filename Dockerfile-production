@@ -1,0 +1,11 @@
+FROM node:8.14.0-stretch
+
+WORKDIR /usr/src/app/
+
+RUN apt-get update \
+  && apt-get install git
+
+RUN git clone https://github.com/coreybobco/setlistspy-web.git .
+
+RUN chmod +x start-production.sh
+RUN yarn install
