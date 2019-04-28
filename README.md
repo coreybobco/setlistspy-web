@@ -8,6 +8,12 @@ Frontend for [Setlist Spy API](https://github.com/coreybobco/setlistspy-api)
 - Kubernetes deployment in API repository
 
 ### Running Locally
+- Using the cloud-hosted backend
+```
+docker-compose -f local-with-production-backend.yml build
+docker-compose -f local-with-production-backend.yml up
+```
+- Using a locally hosted backend (does not come pre-loaded with data, must be seeded)
 ```
 docker-compose -f local.yml build
 docker-compose -f local.yml up
