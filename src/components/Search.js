@@ -6,6 +6,7 @@ import '../styles/search.scss'
 export default class Search extends React.Component {
   constructor (props) {
     super(props)
+    this.submitSearch = this.submitSearch.bind(this)
     this.state = {
       data: {},
       searchName: props.params.query || '',
@@ -32,6 +33,11 @@ export default class Search extends React.Component {
     }
     this.state.frameIndex += 1
     console.log(this.state.frameIndex)
+  }
+
+  submitSearch (e) {
+    e.preventDefault()
+    this.fetchSearchStats(this.state.searchName)
   }
 
   fetchSearchStats (searchTerm) {
@@ -72,11 +78,7 @@ export default class Search extends React.Component {
           onChange={e => this.setState({ ...this.state, searchName: e.target.value })}
           disabled={this.state.isSearching}
         />
-        <button
-          onClick={e => this.fetchSearchStats(this.state.searchName)}
-          type='submit'
-          disabled={this.state.isSearching}
-        >
+        <button onClick={this.submitSearch} type='submit' disabled={this.state.isSearching}>
           <FontAwesome name={this.state.isSearching ? 'spinner' : 'search'} spin={this.state.isSearching} />
         </button>
         {this.state.searchComplete ? (
