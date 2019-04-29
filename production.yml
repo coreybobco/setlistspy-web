@@ -4,6 +4,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile-production
+    image: setlistspy_production_web
     ports:
       - "80:80"
     restart: on-failure
