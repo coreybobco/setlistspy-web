@@ -44,7 +44,7 @@ export default class Search extends React.Component {
     this.setState({ isSearching: true })
     const urls = [
       process.env.API_URL + 'tracks/?setlists__dj__name=' + searchTerm,
-      process.env.API_URL + 'tracks/stats/?artist__name=' + searchTerm
+      process.env.API_URL + 'tracks/?artist__name=' + searchTerm
     ]
 
     Promise.all(urls.map(url => fetch(url)))

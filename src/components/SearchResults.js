@@ -97,24 +97,19 @@ export default class SearchTable extends React.Component {
   }
   
   render() {
-    // if (this.props.data.DJTrackStats) {
       if (this.props.data.DJTrackStats.results.length > 0) {
         this.props.data.DJTrackStatsRows = this.props.data.DJTrackStats.results.map((track, i) => ({
           id: i,
           artist_track: `${track.artist.name} - ${track.title}`,
         }));
       }
-    // }
-    // this.props.data.DJTrackCount = this.props.data.DJTrackStats.results.length ? this.props.data.DJTrackStats : 0;
-    
-    // if (this.props.data.DJTrackStats) {
+
       if (this.props.data.ArtistTrackStats.results.length > 0) {
         this.props.data.ArtistTrackStatsRows = this.props.data.ArtistTrackStats.results.map((track, i) => ({
           id: i,
           artist_track: `${track.artist.name} - ${track.title}`,
         }));
       }
-    // }
     return  (
     <div id="SearchResults">
       <Tabs>
